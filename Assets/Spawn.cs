@@ -12,16 +12,16 @@ public class Spawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spawnObject();
+        spawnObjects();
     }
 
     public void spawnObjects()
     {
         int randomItem = 0;
         GameObject toSpawn;
-        meshcollider c = quad.GetComponent<MeshCollidder>();
+        MeshCollider c = quad.GetComponent<MeshCollider>();
         float screenX, screenY;
-        vector 2 pos;
+        Vector2 pos;
 
         for(int i = 0; i < numberToSpawn; i++)
         {

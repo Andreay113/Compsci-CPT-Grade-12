@@ -8,7 +8,7 @@ public class Move : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public int speed = 1;
+    public float speed = 1f;
     private int coinCounter = 0;
     public TMP_Text counterText;
     void Start()

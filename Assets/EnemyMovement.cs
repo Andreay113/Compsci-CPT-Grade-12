@@ -6,8 +6,9 @@ public class EnemyMovement : MonoBehaviour
 {
     public Transform player;
     public float moveSpeed = 5f;
-    private float minDistance = 1f;
+    public float minDistance = 1f;
     private float range;
+    private float distance;
 
     void Start()
     {
@@ -17,12 +18,12 @@ public class EnemyMovement : MonoBehaviour
     {
 
         range = Vector2.Distance(transform.position, player.position);
-        if (range > minDistance)
-		{
-            Debug.Log(range);
+ 
 
-            transform.Translate(Vector2.MoveTowards(transform.position, player.position, range) * moveSpeed * Time.deltaTime);
-		}
+        distance = Vector2.Distance(transform.position, player.transform.position);
+        Vector2 direction = player.transform.position - transform.position;
+
+        transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, moveSpeed * Time.deltaTime);
 
 
     }

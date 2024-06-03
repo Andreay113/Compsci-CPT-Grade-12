@@ -8,9 +8,12 @@ public class Move : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public int speed = 1;
+    public float speed = 1f;
     private int coinCounter = 0;
+    public int health = 10;
     public TMP_Text counterText;
+    public TMP_Text healthCounter;
+
     void Start()
     {
         
@@ -36,5 +39,19 @@ public class Move : MonoBehaviour
             coinCounter++;
             counterText.text = "Coins: " + coinCounter;
         }
+
+        if (collision.CompareTag("Attack"))
+        {
+            collision.gameObject.SetActive(false);
+            health --;
+            healthCounter.text = "Health: " + health;
+        }
+    }
+
+    public void changeHealth(int n)
+    {
+        this.health += n;
+        healthCounter.text = "Health: " + health;
+
     }
 }

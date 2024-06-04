@@ -2009,7 +2009,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCam: {fileID: 519420031}
-  bullet: {fileID: 0}
+  bullet: {fileID: 5176458327353749885, guid: 14da0068153675444878ab87752b1086, type: 3}
   bulletTranform: {fileID: 1102349240}
   canFire: 1
   timeBetween: 2

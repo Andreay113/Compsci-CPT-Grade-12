@@ -18,7 +18,7 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
- 
+
 
         distance = Vector2.Distance(transform.position, player.transform.position);
         Vector2 direction = player.transform.position - transform.position;
@@ -35,11 +35,22 @@ public class EnemyMovement : MonoBehaviour
             {
                 player.GetComponent<Move>().changeHealth(-damage);
                 passedTime = 0;
+                Destroy(gameObject);
             }
         }
 
         passedTime += Time.deltaTime;
+
+
+
     }
-
-
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            Destroy(gameObject);
+            Debug.Log("hit");
+        }
+    }
 }
+

@@ -8,11 +8,13 @@ public class Move : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public float speed = 1f;
+    public float speed;
+    public TMP_Text coinText;
+    public TMP_Text healthCounter; 
+    public TMP_Text pointCounter;
     private int coinCounter = 0;
     public int health = 10;
-    public TMP_Text coinText;
-    public TMP_Text healthCounter;
+    private int points = 0;
 
     void Start()
     {
@@ -38,6 +40,8 @@ public class Move : MonoBehaviour
             Destroy(collision);
             coinCounter++;
             coinText.text = "Coins: " + coinCounter;
+            changePoints(3);
+
         }
 
         if (collision.CompareTag("Attack"))
@@ -45,6 +49,7 @@ public class Move : MonoBehaviour
             collision.gameObject.SetActive(false);
             health --;
             healthCounter.text = "Health: " + health;
+            changePoints(5);
         }
     }
 
@@ -59,6 +64,12 @@ public class Move : MonoBehaviour
     {
         this.coinCounter += n;
         coinText.text = "Coin: " + coinCounter;
+
+    }
+    public void changePoints(int n)
+    {
+        this.points += n;
+        pointCounter.text = "Points: " + points;
 
     }
 }

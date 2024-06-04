@@ -19,6 +19,7 @@ public class EnemyMovement : MonoBehaviour
     void Update()
     {
 
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
         distance = Vector2.Distance(transform.position, player.transform.position);
         Vector2 direction = player.transform.position - transform.position;
@@ -49,7 +50,6 @@ public class EnemyMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Bullet"))
         {
             Destroy(gameObject);
-            Debug.Log("hit");
         }
     }
 }

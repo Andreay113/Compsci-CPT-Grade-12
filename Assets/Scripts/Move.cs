@@ -11,7 +11,7 @@ public class Move : MonoBehaviour
     public float speed = 1f;
     private int coinCounter = 0;
     public int health = 10;
-    public TMP_Text counterText;
+    public TMP_Text coinText;
     public TMP_Text healthCounter;
 
     void Start()
@@ -33,11 +33,11 @@ public class Move : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Coin"))
+        if (collision.gameObject.CompareTag("Coin"))
         {
-            collision.gameObject.SetActive(false);
+            Destroy(collision);
             coinCounter++;
-            counterText.text = "Coins: " + coinCounter;
+            coinText.text = "Coins: " + coinCounter;
         }
 
         if (collision.CompareTag("Attack"))
@@ -52,6 +52,13 @@ public class Move : MonoBehaviour
     {
         this.health += n;
         healthCounter.text = "Health: " + health;
+
+    }
+
+    public void changeCoin(int n)
+    {
+        this.coinCounter += n;
+        coinText.text = "Coin: " + coinCounter;
 
     }
 }

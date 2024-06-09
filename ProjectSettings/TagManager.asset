@@ -8,6 +8,7 @@ TagManager:
   - Spawnable
   - Attack
   - Bullet
+  - Event
   layers:
   - Default
   - TransparentFX

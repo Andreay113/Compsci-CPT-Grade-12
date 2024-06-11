@@ -6,6 +6,7 @@ public class algorithms : MonoBehaviour
 {
     private Transform player;
     private bool allow = true;
+    public GameObject coinSearch;
 
     void Start()
     {
@@ -16,13 +17,17 @@ public class algorithms : MonoBehaviour
     {
         if (allow)
         {
-            GetTag("Coin");
+            GameObject[] coin = SortTag("Coin");
+            Debug.Log("coin position: " + SearchTag(coinSearch, coin));
+
+
             allow = false;
+
 
         }
     }
 
-    public GameObject[] GetTag(string tag)
+    public GameObject[] SortTag(string tag)
     {
         GameObject[] tagList = GameObject.FindGameObjectsWithTag(tag);
 
@@ -31,7 +36,6 @@ public class algorithms : MonoBehaviour
         for (int n = 0; n < tagList.Length; n++)
         {
             float distance = Vector2.Distance(tagList[n].transform.position, player.position);
-            Vector2 direction = player.position - tagList[n].transform.position;
             distanceTag[n] = distance;
 
         }
@@ -57,11 +61,36 @@ public class algorithms : MonoBehaviour
 
         foreach (float n in distanceTag)
         {
-            Debug.Log($"{n}");
+            Debug.Log($"distance: {n}");
         }
 
         return tagList;
 
 
+    }
+
+    public int SearchTag(GameObject target, GameObject[] list)
+    {
+        float targetDistance = Vector2.Distance(target.transform.position, player.position);
+
+        int right = list.Length - 1;
+        int left = 0;
+
+
+        while (right >= left)
+        {
+            int mid = (left + right) / 2;
+
+            float midDistance = Vector2.Distance(list[mid].transform.position, player.position);
+
+
+            if (targetDistance > midDistance)
+                left = mid + 1;
+            else if (targetDistance < midDistance)
+                right = mid - 1;
+            else
+                return mid;
+        }
+        return -1;
     }
 }

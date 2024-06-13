@@ -124,6 +124,8 @@ public class RoomManager : MonoBehaviour
         Room topRoomScript = GetRoomScriptAt(new Vector2Int(x, y + 1));
         Room bottomRoomScript = GetRoomScriptAt(new Vector2Int(x, y - 1));
 
+        //Add a generate enemy and coin script here
+
 
         if (x>0 && roomGrid[x - 1,y] != 0)
         {

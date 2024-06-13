@@ -1,44 +1,56 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Unity.Collections;
+using Unity.Entities;
+using Unity.Mathematics;
+using Unity.Physics;
+using Unity.Transforms;
 
-public class Example : MonoBehaviour
+public partial class AIControllerSystem : SystemBase
 {
-    private CharacterController controller;
-    private Vector3 playerVelocity;
-    private bool groundedPlayer;
-    private float playerSpeed = 2.0f;
-    private float jumpHeight = 1.0f;
-    private float gravityValue = -9.81f;
-
-    private void Start()
+    protected override void OnUpdate()
     {
-        controller = gameObject.AddComponent<CharacterController>();
-    }
+        PhysicsWorld physicsWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().PhysicsWorld;
+        NativeList<DistanceHit> distanceHits = new NativeList<DistanceHit>(Allocator.TempJob);
 
-    void Update()
-    {
-        groundedPlayer = controller.isGrounded;
-        if (groundedPlayer && playerVelocity.y < 0)
+        foreach (var (characterControl, aiController, localTransform) in SystemAPI.Query<RefRW<ThirdPersonCharacterControl>, AIController, LocalTransform>())
         {
-            playerVelocity.y = 0f;
+            // Clear our detected hits list between each use
+            distanceHits.Clear();
+
+            // Create a hit collector for the detection hits
+            AllHitsCollector<DistanceHit> hitsCollector = new AllHitsCollector<DistanceHit>(aiController.DetectionDistance, ref distanceHits);
+
+            // Detect hits that are within the detection range of the AI character
+            PointDistanceInput distInput = new PointDistanceInput
+            {
+                Position = localTransform.Position,
+                MaxDistance = aiController.DetectionDistance,
+                Filter = new CollisionFilter { BelongsTo = CollisionFilter.Default.BelongsTo, CollidesWith = aiController.DetectionFilter.Value },
+            };
+            physicsWorld.CalculateDistance(distInput, ref hitsCollector);
+
+            // Iterate on all detected hits to try to find a human-controlled character...
+            Entity selectedTarget = Entity.Null;
+            for (int i = 0; i < hitsCollector.NumHits; i++)
+            {
+                Entity hitEntity = distanceHits[i].Entity;
+
+                // If it has a character component but no AIController component, that means it's a human player character
+                if (SystemAPI.HasComponent<ThirdPersonCharacterComponent>(hitEntity) && !SystemAPI.HasComponent<AIController>(hitEntity))
+                {
+                    selectedTarget = hitEntity;
+                    break; // early out
+                }
+            }
+
+            // In the character control component, set a movement vector that will make the ai character move towards the selected target
+            if (selectedTarget != Entity.Null)
+            {
+                characterControl.ValueRW.MoveVector = math.normalizesafe(SystemAPI.GetComponent<LocalTransform>(selectedTarget).Position - localTransform.Position);
+            }
+            else
+            {
+                characterControl.ValueRW.MoveVector = float3.zero;
+            }
         }
-
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        controller.Move(move * Time.deltaTime * playerSpeed);
-
-        if (move != Vector3.zero)
-        {
-            gameObject.transform.forward = move;
-        }
-
-        // Changes the height position of the player..
-        if (Input.GetButtonDown("Jump") && groundedPlayer)
-        {
-            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
-        }
-
-        playerVelocity.y += gravityValue * Time.deltaTime;
-        controller.Move(playerVelocity * Time.deltaTime);
     }
 }

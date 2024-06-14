@@ -10,7 +10,7 @@ public class EnemyMovement : MonoBehaviour
     public float minDistance;
     public float attackDistance;
     private float passedTime = 1;
-    public int damage;
+    private int damage = 1;
 
     void Start()
     {

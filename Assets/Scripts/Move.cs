@@ -2,6 +2,8 @@ using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 
 public class Move : MonoBehaviour
@@ -31,6 +33,16 @@ public class Move : MonoBehaviour
         pos.x += h * Time.deltaTime;
         pos.y += v * Time.deltaTime;
         transform.position = pos;
+
+
+        if (this.health <= 0)
+        {
+            string dataToKeep = pointCounter.text;
+            StaticData.valueToKeep = dataToKeep;
+            SceneManager.LoadSceneAsync(2);
+
+
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -72,4 +84,6 @@ public class Move : MonoBehaviour
         pointCounter.text = "Points: " + points;
 
     }
+
+    
 }

@@ -1230,25 +1230,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: Quad
       objectReference: {fileID: 0}
+    - target: {fileID: 2795109208661222315, guid: 49192f32163dced499fe488095526c44, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2795109208661222319, guid: 49192f32163dced499fe488095526c44, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2795109208661222319, guid: 49192f32163dced499fe488095526c44, type: 3}
       propertyPath: m_LocalScale.x
-      value: 16.262594
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 2795109208661222319, guid: 49192f32163dced499fe488095526c44, type: 3}
       propertyPath: m_LocalScale.y
-      value: 8.450356
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2795109208661222319, guid: 49192f32163dced499fe488095526c44, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.1352
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2795109208661222319, guid: 49192f32163dced499fe488095526c44, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.2182
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2795109208661222319, guid: 49192f32163dced499fe488095526c44, type: 3}
       propertyPath: m_LocalPosition.z

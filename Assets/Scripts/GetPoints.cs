@@ -10,8 +10,8 @@ public class GetPoints : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        string newText = StaticData.valueToKeep;
-        pointsText.text = newText;
+        int points = StaticData.valueToKeep;
+        pointsText.text = $"points: {points}";
     }
 
     // Update is called once per frame

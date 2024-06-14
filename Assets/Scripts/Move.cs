@@ -37,7 +37,7 @@ public class Move : MonoBehaviour
 
         if (this.health <= 0)
         {
-            string dataToKeep = pointCounter.text;
+            int dataToKeep = points;
             StaticData.valueToKeep = dataToKeep;
             SceneManager.LoadSceneAsync(2);
 

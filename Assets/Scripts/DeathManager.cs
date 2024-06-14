@@ -11,8 +11,8 @@ public class DeathManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        string newText = StaticData.valueToKeep;
-        pointsText.text = newText;
+        int points = StaticData.valueToKeep;
+        pointsText.text = $"Points: {points}";
     }
 
 
